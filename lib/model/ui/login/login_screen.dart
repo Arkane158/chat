@@ -1,5 +1,7 @@
 import 'package:chat/model/database/models/user.dart';
+import 'package:chat/model/providers/app_provider.dart';
 import 'package:chat/model/ui/base/base_view.dart';
+import 'package:chat/model/ui/forgot_password/forgot_password_screen.dart';
 import 'package:chat/model/ui/home/home_screen.dart';
 import 'package:chat/model/ui/login/login_navigator.dart';
 import 'package:chat/model/ui/login/login_viewmodel.dart';
@@ -44,10 +46,7 @@ class _LoginScreenState extends BaseView<LoginScreen, LoginViewModel>
                 image: AssetImage('assets/images/main_bg.png'),
                 fit: BoxFit.cover)),
         child: Scaffold(
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
             title: const Text(
               'Login',
             ),
@@ -118,7 +117,15 @@ class _LoginScreenState extends BaseView<LoginScreen, LoginViewModel>
                             alignment: Alignment.center,
                             child: Column(
                               children: [
-                                const Text("Forgot Password?"),
+                                InkWell(
+                                    onTap: () {
+                                      Navigator.pushNamed(context,
+                                          ForgotPasswordScreen.screenName);
+                                    },
+                                    child: const Text(
+                                      "Forgot Password?",
+                                      style: TextStyle(color: Colors.blue),
+                                    )),
                                 const SizedBox(
                                   height: 10,
                                 ),
@@ -168,12 +175,14 @@ class _LoginScreenState extends BaseView<LoginScreen, LoginViewModel>
 
   @override
   goToHome(MyUser myUser) {
+    Provider.of<AppProvider>(context, listen: false);
     Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(
-      builder: (context) =>const HomeScreen(),
-    ),
-    (route) => false, // This predicate removes all previous routes from the stack.
-  );
+      context,
+      MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+      ),
+      (route) =>
+          false, // This predicate removes all previous routes from the stack.
+    );
   }
 }

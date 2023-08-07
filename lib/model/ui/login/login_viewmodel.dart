@@ -13,7 +13,7 @@ class LoginViewModel extends BaseViewmodel<LoginNavigator> {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       navigator?.hideDialog();
-      navigator?.showMessage('Login Successful', posActionTitle: 'Ok');
+      // navigator?.showMessage('Login Successful', posActionTitle: 'Ok');
       MyUser? myUser =
           await DatabaseManager.readUser(credential.user?.uid ?? '');
       if (myUser?.id != null) {
@@ -28,6 +28,8 @@ class LoginViewModel extends BaseViewmodel<LoginNavigator> {
       } else if (e.code == 'wrong-password') {
         navigator?.showMessage('Wrong password provided for that user.',
             posActionTitle: 'Ok');
+      } else {
+        navigator?.showMessage('something went wrong', posActionTitle: 'Ok');
       }
     }
   }

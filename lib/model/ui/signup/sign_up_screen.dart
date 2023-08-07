@@ -1,4 +1,5 @@
 import 'package:chat/model/database/models/user.dart';
+import 'package:chat/model/providers/app_provider.dart';
 import 'package:chat/model/ui/base/base_view.dart';
 import 'package:chat/model/ui/home/home_screen.dart';
 import 'package:chat/model/ui/login/login_screen.dart';
@@ -36,6 +37,7 @@ class _SignUpScreenState extends BaseView<SignUpScreen, SignUpViewModel>
 
   @override
   Widget build(BuildContext context) {
+    bool hidePassword = true;
     return ChangeNotifierProvider(
       create: (context) => viewModel,
       child: Container(
@@ -46,12 +48,9 @@ class _SignUpScreenState extends BaseView<SignUpScreen, SignUpViewModel>
                 fit: BoxFit.cover)),
         child: Scaffold(
           // resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
             title: const Text('Sign Up'),
             centerTitle: true,
-            elevation: 0,
           ),
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -111,7 +110,7 @@ class _SignUpScreenState extends BaseView<SignUpScreen, SignUpViewModel>
                           ),
                           CustomFormField(
                             hintText: 'Enter Your Password',
-                            hideText: true,
+                            hideText: hidePassword,
                             controller: passwordController,
                             validator: (text) {
                               if (text?.trim().isEmpty ?? true) {
@@ -126,7 +125,6 @@ class _SignUpScreenState extends BaseView<SignUpScreen, SignUpViewModel>
                           Align(
                               child: Column(
                             children: [
-                              const Text("Forgot Password?"),
                               const SizedBox(
                                 height: 10,
                               ),
@@ -179,6 +177,8 @@ class _SignUpScreenState extends BaseView<SignUpScreen, SignUpViewModel>
 
   @override
   goToHome(MyUser myUser) {
+    Provider.of<AppProvider>(context, listen: false);
+
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(

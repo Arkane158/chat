@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DialogeUtils {
   static void showProgressDialog(BuildContext context, String message,
@@ -66,4 +67,10 @@ class DialogeUtils {
   static void hideDialog(BuildContext context) {
     Navigator.of(context).pop();
   }
+}
+
+String formatMessageDate(int messageDateTime) {
+  DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(messageDateTime);
+  DateFormat dateFormat = DateFormat('hh:mm a');
+  return dateFormat.format(dateTime);
 }

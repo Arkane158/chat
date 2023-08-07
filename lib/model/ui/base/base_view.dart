@@ -3,7 +3,7 @@ import 'package:chat/model/ui/base/base_viewmodel.dart';
 import 'package:chat/model/ui/dialoge_utils.dart';
 import 'package:flutter/material.dart';
 
-abstract class BaseView<T extends StatefulWidget,VM extends BaseViewmodel>
+abstract class BaseView<T extends StatefulWidget, VM extends BaseViewmodel>
     extends State<T> implements BaseNavigator {
   VM initViewmodel();
   late VM viewModel = initViewmodel();
@@ -11,6 +11,12 @@ abstract class BaseView<T extends StatefulWidget,VM extends BaseViewmodel>
   @override
   void hideDialog() {
     DialogeUtils.hideDialog(context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    viewModel.navigator = this;
   }
 
   @override
